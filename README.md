@@ -1,0 +1,79 @@
+# ECG Trustworthiness Benchmark
+
+Wieloaspektowa ocena wiarygodności modeli głębokiego uczenia do klasyfikacji arytmii EKG – wyjaśnialność, kalibracja niepewności, odporność na domain shift.
+
+---
+
+## Setup
+
+### Wymagania
+
+- [Miniconda](https://docs.anaconda.com/miniconda/) (Python 3.11, PyTorch z CUDA)
+- Zalecany GPU z CUDA 12.1
+
+### Automatycznie (Windows)
+
+```powershell
+.\scripts\setup_env.ps1
+conda activate ecg-trust
+```
+
+### Ręcznie
+
+```bash
+conda env create -f environment.yml
+conda activate ecg-trust
+pip freeze > requirements-locked.txt   # zamrożenie wersji
+```
+
+Po zamrożeniu commitnij `requirements-locked.txt`, aby każdy członek zespołu miał identyczne wersje.
+
+---
+
+## Struktura
+
+| Katalog | Zawartość |
+|---|---|
+| `data/raw/{incart,ptb-xl,chapman-shaoxing}/` | Dane źródłowe (read‑only) |
+| `data/processed/{dataset}/` | Artefakty przetwarzania (sygnały, splity) |
+| `data/features/{dataset}/` | Cechy dla modeli baseline |
+| `scripts/loaders/incart/` | Loader INCART |
+| `scripts/train/` | Trening modeli |
+| `scripts/utils/` | Helpery (metrki, wizualizacje) |
+| `models/ptb-xl/` | Wagi trenowane na PTB-XL |
+| `notebooks/` | Jupyter Notebooki |
+| `results/{ptb-xl,domain_shift,robustness}/` | Wyniki per scenariusz |
+| `experiments/` | Konfiguracje i logi |
+| `docs/` | Przegląd literatury, raporty |
+
+---
+
+## Importy
+
+```python
+import sys
+sys.path.insert(0, "ścieżka/do/projektu/scripts")
+from loaders.incart.config import DATA_DIR
+```
+
+---
+
+## Konwencje
+
+- **Kod** → `scripts/{loaders,train,utils}/`
+- **Dane źródłowe** → `data/raw/{dataset}/` (nigdy nie modyfikować ręcznie)
+- **Artefakty** → `data/processed/{dataset}/`
+- **Wyniki** → `results/{scenariusz}/{dataset}/`
+- **Wagi** → `models/{dataset_treningowy}/{architektura}/`
+
+---
+
+## Docker (TODO)
+
+Dla w pełni powtarzalnego środowiska – niezależnego od OS i sterowników CUDA – planowane jest dodanie `Dockerfile` bazującego na `pytorch/pytorch:2.5.1-cuda12.1-cudnn9-runtime`.
+
+```bash
+# docelowo:
+docker build -t ecg-trust .
+docker run --gpus all -v $(pwd):/workspace -it ecg-trust
+```
