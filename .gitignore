@@ -8,21 +8,24 @@ build/
 # Jupyter
 .ipynb_checkpoints/
 
-# Data (large files)
+# Data (large files, keep structure via .gitkeep)
 data/raw/*
 data/processed/*
 data/features/*
-!data/raw/.gitkeep
-!data/processed/.gitkeep
-!data/features/.gitkeep
+!data/raw/**/
+!data/processed/**/
+!data/features/**/
+!**/.gitkeep
 
-# Models
+# Models (keep structure via .gitkeep)
 models/**/*.pt
 models/**/*.pth
 models/**/*.joblib
 
-# Experiments
-experiments/*
+# Experiments (keep structure via .gitkeep)
+experiments/**
+!experiments/**/
+!**/.gitkeep
 
 # Environment
 .env
@@ -42,3 +45,9 @@ Thumbs.db
 conda_env.yml
 
 *.txt
+*.parquet
+*.hea
+*.atr
+*.dat
+ANNOTATORS
+RECORDS
