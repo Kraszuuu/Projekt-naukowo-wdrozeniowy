@@ -44,7 +44,6 @@ Thumbs.db
 # Conda
 conda_env.yml
 
-*.txt
 *.parquet
 *.hea
 *.atr

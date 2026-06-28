@@ -1,0 +1,22 @@
+services:
+  ecg-trust:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: ecg-trust:latest
+    container_name: ecg-trust
+    runtime: nvidia
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=all
+      - PYTHONPATH=/workspace/scripts:${PYTHONPATH:-}
+    working_dir: /workspace
+    volumes:
+      - ./scripts:/workspace/scripts
+      - ./data:/workspace/data
+      - ./models:/workspace/models
+      - ./results:/workspace/results
+      - ./experiments:/workspace/experiments
+      - ./notebooks:/workspace/notebooks
+    stdin_open: true
+    tty: true
+    command: bash
