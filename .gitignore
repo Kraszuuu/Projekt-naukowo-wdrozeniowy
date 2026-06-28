@@ -41,10 +41,9 @@ env/
 Thumbs.db
 .DS_Store
 
-# Conda
-conda_env.yml
-
 *.txt
+!requirements.txt
+!requirements-locked.txt
 *.parquet
 *.hea
 *.atr

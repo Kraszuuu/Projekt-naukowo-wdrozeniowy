@@ -8,23 +8,31 @@ Wieloaspektowa ocena wiarygodności modeli głębokiego uczenia do klasyfikacji 
 
 ### Wymagania
 
-- [Miniconda](https://docs.anaconda.com/miniconda/) (Python 3.11, PyTorch z CUDA)
-- Zalecany GPU z CUDA 12.1
+- Python 3.11 (działa też 3.10 / 3.12)
+- Zalecany GPU NVIDIA z CUDA 12.1 (sterownik ≥ 525). Bez GPU – patrz uwaga niżej.
 
 ### Automatycznie (Windows)
 
 ```powershell
 .\scripts\setup_env.ps1
-conda activate ecg-trust
+.\.venv\Scripts\Activate.ps1
 ```
+
+Skrypt tworzy środowisko `.venv`, instaluje zależności z `requirements.txt` i zapisuje zamrożone wersje do `requirements-locked.txt`.
 
 ### Ręcznie
 
-```bash
-conda env create -f environment.yml
-conda activate ecg-trust
+```powershell
+python -m venv .venv
+.\.venv\Scripts\Activate.ps1
+python -m pip install --upgrade pip
+pip install -r requirements.txt
 pip freeze > requirements-locked.txt   # zamrożenie wersji
 ```
+
+Na Linux/macOS aktywacja środowiska: `source .venv/bin/activate`.
+
+> **Bez GPU NVIDIA?** W `requirements.txt` usuń linię `--extra-index-url ...` oraz sufiksy `+cu121`, aby zainstalować wersję CPU PyTorcha.
 
 Po zamrożeniu commitnij `requirements-locked.txt`, aby każdy członek zespołu miał identyczne wersje.
 

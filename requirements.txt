@@ -1,0 +1,17 @@
+# PyTorch z CUDA 12.1 - oficjalny indeks wheel PyTorch.
+# Sufiks +cu121 wymusza buildy GPU (na Windows domyslny pakiet z PyPI to wersja CPU).
+--extra-index-url https://download.pytorch.org/whl/cu121
+torch==2.5.1+cu121
+torchvision==0.20.1+cu121
+
+# Przetwarzanie danych EKG
+numpy
+pandas
+wfdb
+
+# Modele baseline / metryki / wizualizacje
+scikit-learn
+matplotlib
+
+# Notebooki
+jupyter
