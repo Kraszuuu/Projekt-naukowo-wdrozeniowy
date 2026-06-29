@@ -1,7 +1,7 @@
-"""Weryfikacja integralności (SHA256) i licencji zbioru PTB-XL.
+"""Integrity (SHA256) and license verification for the PTB-XL dataset.
 
-Realizuje wymóg Etapu 2: kontrola integralności wg SHA256SUMS.txt
-oraz potwierdzenie licencji CC BY 4.0.
+Implements the Stage 2 requirement: integrity check against SHA256SUMS.txt
+and confirmation of the CC BY 4.0 license.
 """
 
 import hashlib
@@ -16,7 +16,7 @@ _CHUNK = 1 << 20  # 1 MiB
 
 
 def parse_sha256sums():
-    """Zwraca słownik {ścieżka_względna: oczekiwany_hash} z SHA256SUMS.txt."""
+    """Returns a dict {relative_path: expected_hash} from SHA256SUMS.txt."""
     sums = {}
     with open(SHA256SUMS_FILE, "r", encoding="utf-8") as f:
         for line in f:
@@ -39,9 +39,9 @@ def sha256_of(path):
 
 
 def verify_license():
-    """Sprawdza, czy LICENSE.txt to Creative Commons Attribution 4.0."""
+    """Checks whether LICENSE.txt is Creative Commons Attribution 4.0."""
     if not LICENSE_FILE.exists():
-        return {"ok": False, "reason": "Brak pliku LICENSE.txt", "header": None}
+        return {"ok": False, "reason": "Missing LICENSE.txt file", "header": None}
     with open(LICENSE_FILE, "r", encoding="utf-8") as f:
         header = f.readline().strip()
     ok = LICENSE_EXPECTED_HEADER.lower() in header.lower()
@@ -59,12 +59,12 @@ def _verify_one(rel_name, sums):
 
 
 def verify_files(sample=100, full=False, seed=0):
-    """Weryfikuje SHA256 plików zbioru.
+    """Verifies SHA256 of the dataset files.
 
-    - Pliki metadanych (KEY_FILES) sprawdzane są zawsze w całości.
-    - Pliki sygnałowe: losowa próbka `sample` rekordów (lub wszystkie gdy full=True).
+    - Metadata files (KEY_FILES) are always checked in full.
+    - Signal files: a random sample of `sample` records (or all when full=True).
 
-    Zwraca raport z licznikami i listą niezgodności.
+    Returns a report with counters and a list of mismatches.
     """
     sums = parse_sha256sums()
 
@@ -78,7 +78,7 @@ def verify_files(sample=100, full=False, seed=0):
         to_check_signals = signal_files
     else:
         rng = random.Random(seed)
-        # Próbkujemy po nazwie bazowej rekordu, by sprawdzać pary .dat + .hea.
+        # Sample by record base name to check .dat + .hea pairs together.
         bases = sorted({n.rsplit(".", 1)[0] for n in signal_files})
         chosen = set(rng.sample(bases, min(sample, len(bases))))
         to_check_signals = [n for n in signal_files if n.rsplit(".", 1)[0] in chosen]

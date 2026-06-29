@@ -1,7 +1,7 @@
-"""Wczytywanie sygnałów EKG PTB-XL przez bibliotekę wfdb.
+"""Loading PTB-XL ECG signals via the wfdb library.
 
-Realizuje kryterium zaliczenia Etapu 2: poprawne wczytanie co najmniej
-100 sygnałów. Dodatkowo zbiera statystyki kształtu/zakresu sygnału.
+Implements the Stage 2 pass criterion: correctly loading at least
+100 signals. Additionally collects signal shape/range statistics.
 """
 
 import numpy as np
@@ -11,16 +11,16 @@ from loaders.ptbxl.config import DATA_DIR, EXPECTED_LEADS, SAMPLING_RATE_LR
 
 
 def load_signal(filename):
-    """Wczytuje pojedynczy rekord WFDB. `filename` jak w kolumnie filename_lr/hr."""
+    """Loads a single WFDB record. `filename` as in the filename_lr/hr column."""
     record_path = str(DATA_DIR / filename)
     signal, meta = wfdb.rdsamp(record_path)
     return signal, meta
 
 
 def load_signals(df, n=100, sampling_rate=SAMPLING_RATE_LR):
-    """Wczytuje pierwsze `n` rekordów i weryfikuje poprawność.
+    """Loads the first `n` records and verifies correctness.
 
-    Zwraca raport: ile wczytano, kształty, fs, zakres amplitud, błędy.
+    Returns a report: how many loaded, shapes, fs, amplitude range, errors.
     """
     col = "filename_lr" if sampling_rate == SAMPLING_RATE_LR else "filename_hr"
     filenames = df[col].head(n).tolist()
@@ -36,7 +36,7 @@ def load_signals(df, n=100, sampling_rate=SAMPLING_RATE_LR):
     for fn in filenames:
         try:
             signal, meta = load_signal(fn)
-        except Exception as exc:  # noqa: BLE001 - chcemy zebrać wszystkie błędy
+        except Exception as exc:  # noqa: BLE001 - we want to collect all errors
             errors.append({"filename": fn, "error": str(exc)})
             continue
         loaded += 1
