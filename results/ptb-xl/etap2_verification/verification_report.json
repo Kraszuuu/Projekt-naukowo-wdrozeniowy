@@ -1,0 +1,195 @@
+{
+  "generated_at": "2026-06-29T11:25:06",
+  "dataset": "PTB-XL v1.0.3",
+  "license": {
+    "ok": true,
+    "header": "Creative Commons Attribution 4.0 International Public License",
+    "expected": "Creative Commons Attribution 4.0 International Public License"
+  },
+  "integrity": {
+    "total_in_sha256sums": 87203,
+    "checked": 107,
+    "signal_records_checked": 50,
+    "full": false,
+    "ok": 107,
+    "mismatch": [],
+    "missing": [],
+    "no_reference": [],
+    "passed": true
+  },
+  "metadata": {
+    "n_records": 21799,
+    "demographics": {
+      "n_patients": 18869,
+      "age": {
+        "min": 2.0,
+        "max": 300.0,
+        "mean": 62.77,
+        "median": 62.0
+      },
+      "sex": {
+        "male": 11354,
+        "female": 10445
+      }
+    },
+    "fold_distribution": {
+      "per_fold": {
+        "1": 2175,
+        "2": 2181,
+        "3": 2192,
+        "4": 2174,
+        "5": 2174,
+        "6": 2173,
+        "7": 2176,
+        "8": 2173,
+        "9": 2183,
+        "10": 2198
+      },
+      "train_folds_1_8": 17418,
+      "val_fold_9": 2183,
+      "test_fold_10": 2198
+    },
+    "superclass_distribution": {
+      "NORM": {
+        "count": 9514,
+        "pct": 43.64
+      },
+      "MI": {
+        "count": 5469,
+        "pct": 25.09
+      },
+      "STTC": {
+        "count": 5235,
+        "pct": 24.01
+      },
+      "CD": {
+        "count": 4898,
+        "pct": 22.47
+      },
+      "HYP": {
+        "count": 2649,
+        "pct": 12.15
+      },
+      "__unlabeled__": {
+        "count": 411,
+        "pct": 1.89
+      }
+    },
+    "label_cooccurrence": {
+      "NORM": {
+        "NORM": 9514,
+        "MI": 1,
+        "STTC": 33,
+        "CD": 415,
+        "HYP": 5
+      },
+      "MI": {
+        "NORM": 1,
+        "MI": 5469,
+        "STTC": 1339,
+        "CD": 1794,
+        "HYP": 818
+      },
+      "STTC": {
+        "NORM": 33,
+        "MI": 1339,
+        "STTC": 5235,
+        "CD": 1066,
+        "HYP": 1509
+      },
+      "CD": {
+        "NORM": 415,
+        "MI": 1794,
+        "STTC": 1066,
+        "CD": 4898,
+        "HYP": 787
+      },
+      "HYP": {
+        "NORM": 5,
+        "MI": 818,
+        "STTC": 1509,
+        "CD": 787,
+        "HYP": 2649
+      }
+    },
+    "missing_data": {
+      "electrodes_problems": {
+        "missing": 21769,
+        "pct": 99.86
+      },
+      "infarction_stadium2": {
+        "missing": 21696,
+        "pct": 99.53
+      },
+      "pacemaker": {
+        "missing": 21508,
+        "pct": 98.67
+      },
+      "burst_noise": {
+        "missing": 21186,
+        "pct": 97.19
+      },
+      "baseline_drift": {
+        "missing": 20201,
+        "pct": 92.67
+      },
+      "extra_beats": {
+        "missing": 19850,
+        "pct": 91.06
+      },
+      "static_noise": {
+        "missing": 18539,
+        "pct": 85.05
+      },
+      "infarction_stadium1": {
+        "missing": 16187,
+        "pct": 74.26
+      },
+      "height": {
+        "missing": 14825,
+        "pct": 68.01
+      },
+      "weight": {
+        "missing": 12378,
+        "pct": 56.78
+      },
+      "validated_by": {
+        "missing": 9378,
+        "pct": 43.02
+      },
+      "heart_axis": {
+        "missing": 8468,
+        "pct": 38.85
+      },
+      "nurse": {
+        "missing": 1473,
+        "pct": 6.76
+      },
+      "site": {
+        "missing": 17,
+        "pct": 0.08
+      }
+    },
+    "min_likelihood_threshold": 0.0
+  },
+  "signals": {
+    "requested": 120,
+    "loaded": 120,
+    "sampling_rate_requested": 100,
+    "fs_observed": [
+      100
+    ],
+    "shapes": [
+      "(1000, 12)"
+    ],
+    "all_12_leads": true,
+    "records_with_nan": 0,
+    "amplitude_range_mV": [
+      -3.472,
+      4.596
+    ],
+    "errors": [],
+    "passed": true
+  },
+  "passed": true
+}
