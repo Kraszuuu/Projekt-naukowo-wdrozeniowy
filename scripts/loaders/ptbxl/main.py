@@ -1,19 +1,19 @@
-"""Etap 2 — Wybór i Weryfikacja Danych (PTB-XL).
+"""Stage 2 — Data Selection and Verification (PTB-XL).
 
-Orkiestruje pełną weryfikację:
-  1. Licencja (CC BY 4.0)
-  2. Integralność SHA256
-  3. Eksploracja metadanych + mapowanie 5 nadklas
-  4. Wczytanie >= 100 sygnałów przez wfdb
-  5. Zapis raportu weryfikacyjnego
+Orchestrates the full verification:
+  1. License (CC BY 4.0)
+  2. SHA256 integrity
+  3. Metadata exploration + mapping to the 5 superclasses
+  4. Loading >= 100 signals via wfdb
+  5. Saving the verification report
 
-Uruchomienie (z katalogu głównego projektu, aktywne środowisko):
-    python -m loaders.ptbxl.main                 # próbka 100 rekordów do SHA256
+Run (from the project root, with the environment activated):
+    python -m loaders.ptbxl.main                 # sample of 100 records for SHA256
     python -m loaders.ptbxl.main --sha-sample 500
-    python -m loaders.ptbxl.main --full-sha      # pełna weryfikacja SHA256 (wolne)
+    python -m loaders.ptbxl.main --full-sha      # full SHA256 verification (slow)
     python -m loaders.ptbxl.main --signals 200
 
-Wymaga, by katalog `scripts/` był na sys.path (patrz blok __main__).
+Requires the `scripts/` directory to be on sys.path (see the __main__ block).
 """
 
 import argparse
@@ -21,8 +21,8 @@ import sys
 from datetime import datetime
 from pathlib import Path
 
-# Umożliwia uruchomienie skryptu bezpośrednio (python scripts/loaders/ptbxl/main.py)
-# oraz jako moduł (python -m loaders.ptbxl.main) — katalog scripts/ trafia na sys.path.
+# Allows running the script directly (python scripts/loaders/ptbxl/main.py)
+# and as a module (python -m loaders.ptbxl.main) — the scripts/ dir goes on sys.path.
 _SCRIPTS_DIR = Path(__file__).resolve().parent.parent.parent
 if str(_SCRIPTS_DIR) not in sys.path:
     sys.path.insert(0, str(_SCRIPTS_DIR))

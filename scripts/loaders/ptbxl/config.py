@@ -12,25 +12,25 @@ RECORDS_FILE = DATA_DIR / "RECORDS"
 
 LEAD_NAMES = ["I", "II", "III", "AVR", "AVL", "AVF", "V1", "V2", "V3", "V4", "V5", "V6"]
 
-# Pięć nadklas diagnostycznych SCP-ECG używanych w projekcie.
+# The five SCP-ECG diagnostic superclasses used in the project.
 SUPERCLASSES = ["NORM", "MI", "STTC", "CD", "HYP"]
 
-# Sugerowany podział foldów (PTB-XL dostarcza strat_fold 1-10).
+# Suggested fold split (PTB-XL provides strat_fold 1-10).
 TRAIN_FOLDS = list(range(1, 9))   # 1-8
 VAL_FOLD = 9
 TEST_FOLD = 10
 
-# Częstotliwości próbkowania dostępne w PTB-XL.
+# Sampling rates available in PTB-XL.
 SAMPLING_RATE_LR = 100   # filename_lr, records100/
 SAMPLING_RATE_HR = 500   # filename_hr, records500/
 
 EXPECTED_LEADS = 12
-EXPECTED_RECORDS = 21799   # liczba rekordów EKG w v1.0.3
+EXPECTED_RECORDS = 21799   # number of ECG records in v1.0.3
 
-# Oczekiwana treść licencji (CC BY 4.0).
+# Expected license header (CC BY 4.0).
 LICENSE_EXPECTED_HEADER = "Creative Commons Attribution 4.0 International Public License"
 
-# Pliki metadanych (nie-sygnałowe), które zawsze weryfikujemy w całości.
+# Metadata (non-signal) files that are always verified in full.
 KEY_FILES = [
     "ptbxl_database.csv",
     "scp_statements.csv",

@@ -1,4 +1,4 @@
-"""Składanie i zapis raportu weryfikacyjnego Etapu 2 dla PTB-XL."""
+"""Assembling and saving the Stage 2 verification report for PTB-XL."""
 
 import json
 from datetime import datetime
@@ -9,7 +9,7 @@ from loaders.ptbxl.config import OUTPUT_DIR, SUPERCLASSES
 
 
 def save_report(report):
-    """Zapisuje raport jako JSON, czytelny TXT, CSV rozkładu klas i wykres."""
+    """Saves the report as JSON, readable TXT, class-distribution CSV and a plot."""
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
     json_path = OUTPUT_DIR / "verification_report.json"

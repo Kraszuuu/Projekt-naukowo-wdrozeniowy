@@ -1,7 +1,7 @@
-"""Wczytanie i eksploracja metadanych PTB-XL (ptbxl_database.csv).
+"""Loading and exploration of PTB-XL metadata (ptbxl_database.csv).
 
-Mapuje kody SCP-ECG na 5 nadklas diagnostycznych (NORM, MI, STTC, CD, HYP)
-i liczy rozkłady klas, foldów, demografii oraz braków danych.
+Maps SCP-ECG codes to the 5 diagnostic superclasses (NORM, MI, STTC, CD, HYP)
+and computes class, fold, demographic and missing-data distributions.
 """
 
 import ast
@@ -16,14 +16,14 @@ from loaders.ptbxl.config import (
 
 
 def load_metadata():
-    """Wczytuje ptbxl_database.csv i parsuje kolumnę scp_codes do słowników."""
+    """Loads ptbxl_database.csv and parses the scp_codes column into dicts."""
     df = pd.read_csv(DATABASE_CSV, index_col="ecg_id")
     df["scp_codes"] = df["scp_codes"].apply(ast.literal_eval)
     return df
 
 
 def load_scp_statements():
-    """Wczytuje scp_statements.csv i zwraca tylko stwierdzenia diagnostyczne."""
+    """Loads scp_statements.csv and returns only the diagnostic statements."""
     agg = pd.read_csv(SCP_STATEMENTS_CSV, index_col=0)
     return agg[agg["diagnostic"] == 1]
 
@@ -42,7 +42,7 @@ def _make_aggregator(agg_df, min_likelihood=0.0):
 
 
 def add_superclasses(df, agg_df, min_likelihood=0.0):
-    """Dodaje kolumnę diagnostic_superclass (lista nadklas) do ramki."""
+    """Adds a diagnostic_superclass column (list of superclasses) to the frame."""
     aggregate = _make_aggregator(agg_df, min_likelihood=min_likelihood)
     df = df.copy()
     df["diagnostic_superclass"] = df["scp_codes"].apply(aggregate)
@@ -50,7 +50,7 @@ def add_superclasses(df, agg_df, min_likelihood=0.0):
 
 
 def superclass_distribution(df):
-    """Rozkład 5 nadklas (wieloetykietowy: rekord może mieć >1 nadklasy)."""
+    """Distribution of the 5 superclasses (multi-label: a record may have >1)."""
     counts = {cls: 0 for cls in SUPERCLASSES}
     n_unlabeled = 0
     for labels in df["diagnostic_superclass"]:
@@ -72,7 +72,7 @@ def superclass_distribution(df):
 
 
 def fold_distribution(df):
-    """Rozkład rekordów wg strat_fold i sugerowanego podziału train/val/test."""
+    """Record distribution by strat_fold and the suggested train/val/test split."""
     per_fold = df["strat_fold"].value_counts().sort_index().to_dict()
     per_fold = {int(k): int(v) for k, v in per_fold.items()}
     train = int(df["strat_fold"].isin(TRAIN_FOLDS).sum())
@@ -102,7 +102,7 @@ def demographics(df):
 
 
 def missing_data(df):
-    """Liczba i odsetek braków w kolumnach metadanych."""
+    """Count and percentage of missing values in metadata columns."""
     na = df.isna().sum()
     na = na[na > 0].sort_values(ascending=False)
     total = len(df)
@@ -113,7 +113,7 @@ def missing_data(df):
 
 
 def label_cooccurrence(df):
-    """Macierz współwystępowania nadklas (ile rekordów ma parę klas)."""
+    """Superclass co-occurrence matrix (how many records share a class pair)."""
     mat = {a: {b: 0 for b in SUPERCLASSES} for a in SUPERCLASSES}
     for labels in df["diagnostic_superclass"]:
         for a in labels:
